@@ -1,0 +1,92 @@
+﻿@model IEnumerable<Student_Course_MVC_MasterDetails.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container mt-4">
+    <h2 class="display-4 text-center mb-4"> All Course List</h2>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <span class="badge badge-pill badge-info">@Model.Count() courses available</span>
+        </div>
+        <div>
+            <a href="@Url.Action("Create", "Courses")" class="btn btn-primary btn-sm">
+                <i class="fa fa-plus-circle"></i> Add New Course
+            </a>
+        </div>
+    </div>
+
+    <table class="table table-hover table-bordered table-striped table-sm">
+        <thead class="thead-dark">
+            <tr class="text-center">
+                <th scope="col">
+                    @Html.DisplayNameFor(model => model.CourseName)
+                </th>
+                <th scope="col">
+                    Actions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CourseName)
+                    </td>
+                    <td class="text-center">
+                        <a href="@Url.Action("Edit", "Courses", new { id = item.CourseId })" class="btn btn-success btn-sm mx-1">
+                            <i class="fa fa-edit"></i> Edit
+                        </a>
+                        <a href="@Url.Action("Delete", "Courses", new { id = item.CourseId })" class="btn btn-danger btn-sm mx-1" onclick="return confirm('Are you sure you want to delete this course?');">
+                            <i class="fa fa-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+@*@model IEnumerable<Student_Course_MVC_MasterDetails.Models.Course>
+
+    @{
+        ViewBag.Title = "Index";
+    }
+
+    <h2 class="display-4 text-center">Course List</h2>
+
+    <p class="d-flex justify-content-end">
+        <a href="@Url.Action("Create","Courses")" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Add New Course</a>
+    </p>
+
+    <table class="table table-bordered table-striped table-sm">
+        <tr class="text-center">
+            <th>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }, new { @class = "btn btn-success btn-sm" })
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseId }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.CourseId }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>*@

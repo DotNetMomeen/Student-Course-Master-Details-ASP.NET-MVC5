@@ -1,0 +1,198 @@
+﻿@model Student_Course_MVC_MasterDetails.Models.ViewModels.StudentVM
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-warning text-white">
+            <h3 class="mb-0 text-center">Edit Student Information</h3>
+        </div>
+        <div class="card-body">
+            @using (Html.BeginForm("Edit", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <!-- Student Information Section -->
+                    <div class="col-md-6">
+                        <h4 class="mb-3">Student Information</h4>
+
+                        <!-- Hidden Fields for ID and Existing Picture -->
+                        @Html.HiddenFor(x => x.StudentId)
+                        @Html.HiddenFor(x => x.PictureFile)
+
+                        <!-- Student Name -->
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(x => x.StudentName, htmlAttributes: new { @class = "col-form-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.StudentName, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.StudentName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Birth Date -->
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(x => x.BirthDate, htmlAttributes: new { @class = "col-form-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.EditorFor(x => x.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control", type = "date" } })
+                                @Html.ValidationMessageFor(x => x.BirthDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(x => x.Age, htmlAttributes: new { @class = "col-form-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.Age, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(x => x.Age, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <!-- Picture Upload -->
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(x => x.PictureFile, htmlAttributes: new { @class = "col-form-label col-sm-4" })
+                            <div class="col-sm-8">
+                                @Html.TextBoxFor(x => x.PictureFile, new { @class = "form-control mb-1", type = "file" })
+                                <img src="@Model.Picture" width="32" />
+                                @*@if (!string.IsNullOrEmpty(Model.Picture))
+                                    {
+                                        <img src="@Model.Picture" width="32" />
+                                    }
+                                    @Html.ValidationMessageFor(x => x.PictureFile, "", new { @class = "text-danger" })*@
+                            </div>
+                        </div>
+
+
+                        @*<div class="row mb-2">
+                            @Html.LabelFor(x => x.PictureFile, htmlAttributes: new { @class = "col-form-label col-form-label-sm col-3" })
+                            <div class="col-7">
+                                @Html.TextBoxFor(x => x.PictureFile, new { @class = "form-control form-control-sm mb-1", type = "file" })
+                                <img src="@Model.Picture" width="32" />
+                            </div>
+                            <div class="col-2">
+                                @Html.ValidationMessageFor(x => x.PictureFile, "", new { @class = "text-danger" })
+                            </div>*@
+
+
+                        <!-- Marital Status -->
+                        <div class="form-group row mb-3">
+                            @Html.LabelFor(x => x.MaritalStatus, htmlAttributes: new { @class = "col-form-label col-sm-4" })
+                            <div class="col-sm-8 d-flex align-items-center">
+                                @Html.CheckBoxFor(x => x.MaritalStatus, new { @class = "mr-2" })
+                                <span>Marital Status</span>
+                            </div>
+                            <div class="col-sm-8 offset-sm-4">
+                                @Html.ValidationMessageFor(x => x.MaritalStatus, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Course Information Section -->
+                    <div class="col-md-6">
+                        <h4 class="mb-3">Course Information</h4>
+                        <div class="d-flex justify-content-end mb-3">
+                            <a href="#" id="btnPlus" class="btn btn-outline-primary btn-sm"><i class="fa fa-plus"></i> Add Course</a>
+                        </div>
+                        <div id="courseContainer" class="border rounded p-3 bg-light">
+                            @foreach (var item in Model.StudentCourseList)
+                            {
+                                @Html.Action("AddNewCourse", "Students", new { id = item })
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end mt-4">
+                    <input type="submit" value="Update" class="btn btn-primary" />
+                </div>
+            }
+        </div>
+    </div>
+    <div class="mt-3">
+        @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-link" })
+    </div>
+</div>
+
+
+
+@*@model Student_Course_MVC_MasterDetails.Models.ViewModels.StudentVM
+    @{
+        ViewBag.Title = "Edit";
+    }
+
+
+    @using (Html.BeginForm("Edit", "Students", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-6">
+                <h2 class="display-5">Student</h2>
+                @Html.HiddenFor(x => x.StudentId)
+                @Html.HiddenFor(x => x.PictureFile)
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.StudentName, htmlAttributes: new { @class = "col-form-label col-form-label-sm col-3" })
+                    <div class="col-7">
+                        @Html.TextBoxFor(x => x.StudentName, new { @class = "form-control form-control-sm" })
+                    </div>
+                    <div class="col-2">
+                        @Html.ValidationMessageFor(x => x.StudentName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.BirthDate, htmlAttributes: new { @class = "col-form-label col-form-label-sm col-3" })
+                    <div class="col-7">
+                        @Html.TextBoxFor(x => x.BirthDate, new { @class = "form-control form-control-sm", type = "date" })
+                        @Html.EditorFor(x => x.BirthDate, "{0:yyyy-MM-dd}", new { htmlAttributes = new { @class = "form-control form-control-sm", type = "date" } })
+                    </div>
+                    <div class="col-2">
+                        @Html.ValidationMessageFor(x => x.BirthDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.Age, htmlAttributes: new { @class = "col-form-label col-form-label-sm col-3" })
+                    <div class="col-7">
+                        @Html.TextBoxFor(x => x.Age, new { @class = "form-control form-control-sm" })
+                    </div>
+                    <div class="col-2">
+                        @Html.ValidationMessageFor(x => x.Age, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.PictureFile, htmlAttributes: new { @class = "col-form-label col-form-label-sm col-3" })
+                    <div class="col-7">
+                        @Html.TextBoxFor(x => x.PictureFile, new { @class = "form-control form-control-sm mb-1", type = "file" })
+                        <img src="@Model.Picture" width="32" />
+                    </div>
+                    <div class="col-2">
+                        @Html.ValidationMessageFor(x => x.PictureFile, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    @Html.LabelFor(x => x.MaritalStatus, htmlAttributes: new { @class = "col-form-label col-form-label-sm col-3" })
+                    <div class="col-7">
+                        @Html.CheckBoxFor(x => x.MaritalStatus)
+                    </div>
+                    <div class="col-2">
+                        @Html.ValidationMessageFor(x => x.MaritalStatus, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <h2 class="display-5">Course</h2>
+                <div class="d-flex justify-content-end">
+                    <a href="#" id="btnPlus" class="btn btn-primary btn-sm" style="margin-right:2px;"><i class="fa fa-plus"></i> </a>
+                </div>
+                <div id="courseContainer">
+                    @foreach (var item in Model.StudentCourseList)
+                    {
+                        @Html.Action("AddNewCourse", "Students", new { id = item })
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-end">
+            <input type="submit" value="Update Data" class="btn btn-primary btn-sm" />
+        </div>
+    }*@
+
+
+

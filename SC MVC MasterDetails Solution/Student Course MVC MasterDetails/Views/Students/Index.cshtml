@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Student_Course_MVC_MasterDetails.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col">
+        <div class="container">
+            <h2 class="display-4 text-center mt-4 mb-4">All Students List & Informaiton</h2>
+            <div class="d-flex justify-content-end">
+                <a href="@Url.Action("Create","Students")" class="btn btn-primary btn-sm mb-4"><i class="fa fa-plus-circle"></i> Add New Student</a>
+            </div>
+
+            <div>
+
+                @foreach (var Student in Model)
+                {
+                    <div class="card mb-2">
+                        <div class="card-header d-flex justify-content-between">
+                            <div>
+                                <img src="@Student.Picture" width="32" />
+
+                                <label class="me-2"><b>Student Name : </b>@Html.DisplayFor(x => Student.StudentName)</label>
+                                <label class="me-2"><b>Age : </b>@Html.DisplayFor(x => Student.Age)</label>
+                                <label class="me-2"><b>Birth Date : </b>@Html.DisplayFor(x => Student.BirthDate)</label>
+                                <label class="me-2"><b>Marital Status : </b>@Html.DisplayFor(x => Student.MaritalStatus)</label>
+                            </div>
+                            <div>
+                                <a href="@Url.Action("Edit", "Students", new {id=Student.StudentId})" id="btnEntryEdit" class="btn btn-success btn-sm"><i class="fa fa-pencil"></i></a>
+                                <a href="@Url.Action("Delete", "Students", new {id=Student.StudentId})" id="btnEntryDelete" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-bordered table-striped table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Course Id</th>
+                                        <th>Course Name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var c in Student.BookingCourseEntries)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(x => c.Course.CourseId)</td>
+                                            <td>@Html.DisplayFor(x => c.Course.CourseName)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
