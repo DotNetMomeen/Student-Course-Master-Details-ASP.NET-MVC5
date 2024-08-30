@@ -1,4 +1,4 @@
-<h1>Student-Course Master-Details ASP.NET MVC5 📚✨</h1>
+<h1>Student-Course Master-Details ASP.NET MVC5 📚</h1>
 
 <p>Welcome to the <strong>Student-Course Master-Details ASP.NET MVC5</strong> repository! This application offers a sophisticated solution for managing student and course information using the ASP.NET MVC5 framework, combining elegance with functionality.</p>
 
